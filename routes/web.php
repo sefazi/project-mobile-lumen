@@ -16,3 +16,6 @@
 $router->get('/', function () use ($router) {
     return $router->app->version();
 });
+
+// Data Barang
+$router->get('/barang', 'DataBarang@index');
