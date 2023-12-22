@@ -14,5 +14,5 @@ class ItemModel extends Model
         'picture',
         'status',
         'user_id'
-];
+    ];
 }

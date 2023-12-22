@@ -16,12 +16,12 @@ class RatingController extends Controller
     public function store(Request $request)
     {
         try {
-            $validate = validator::make( $request->all(), [
+            $validate = validator::make($request->all(), [
                 'rating' => 'required|integer|min:1',
                 'item_id' => 'required',
                 'user_id' => 'required',
             ]);
-    
+
             if ($validate->fails()) {
                 $this->responseMessage = $validate->errors();
                 $this->responseStatus = false;
@@ -33,12 +33,12 @@ class RatingController extends Controller
                     'rating' => $request->input('rating'),
                 ]);
 
-                if($data){
+                if ($data) {
                     $this->responseMessage = "Success Input Rating";
                     $this->responseStatus = true;
                     $this->responseCode = 200;
                     $this->response['data'] = $data;
-                }else{
+                } else {
                     $this->responseMessage = "Failed Inputing Rating";
                     $this->responseStatus = false;
                     $this->responseCode = 400;
@@ -54,7 +54,8 @@ class RatingController extends Controller
         return response()->json($this->response, $this->responseCode);
     }
 
-    public function show(Request $request) {
+    public function show(Request $request)
+    {
         try {
             $itemId = $request->id;
 
@@ -79,7 +80,6 @@ class RatingController extends Controller
 
                     $this->response['count'] = count($this->response['data']);
                     $this->response['rating'] = floatval(number_format($this->response['sum'] / $this->response['count'], 2));
-                
                 } else {
                     $this->responseMessage = "Item Not Found";
                     $this->responseStatus = false;
@@ -94,5 +94,5 @@ class RatingController extends Controller
         $this->response['success'] = $this->responseStatus;
         $this->response['message'] = $this->responseMessage;
         return response()->json($this->response, $this->responseCode);
-    }   
+    }
 }

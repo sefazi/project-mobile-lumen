@@ -27,7 +27,7 @@ class Item extends Controller
             $this->response['data'] = $data;
             $this->response['total'] = count($data);
             foreach ($data as $items) {
-                $items['picture'] = $base64Image ;
+                $items['picture'] = $base64Image;
             }
         } catch (\Throwable $th) {
             $this->responseCode = 500;
@@ -64,12 +64,12 @@ class Item extends Controller
                     'user_id' => $request->input('user_id'),
                 ]);
 
-                if($data){
+                if ($data) {
                     $this->responseMessage = "Success Input Data";
                     $this->responseStatus = true;
                     $this->responseCode = 200;
                     $this->response['data'] = $data;
-                }else{
+                } else {
                     $this->responseMessage = "Failed Input Data";
                     $this->responseStatus = false;
                     $this->responseCode = 400;
@@ -85,7 +85,8 @@ class Item extends Controller
         return response()->json($this->response, $this->responseCode);
     }
 
-    public function update(Request $request) {
+    public function update(Request $request)
+    {
         try {
             $itemId = $request->id;
 
@@ -105,7 +106,6 @@ class Item extends Controller
                 $this->responseStatus = true;
                 $this->responseCode = 200;
                 $this->response['data'] = $item;
-            
             } else {
                 $this->responseMessage = "Item Not Found";
                 $this->responseStatus = false;
@@ -121,7 +121,8 @@ class Item extends Controller
         return response()->json($this->response, $this->responseCode);
     }
 
-    public function destroy(Request $request) {
+    public function destroy(Request $request)
+    {
         try {
             $itemId = $request->id;
 
@@ -146,7 +147,6 @@ class Item extends Controller
                     $this->responseCode = 404;
                 }
             }
-
         } catch (\Throwable $th) {
             $this->responseCode = 500;
             $this->responseStatus = false;
@@ -157,7 +157,8 @@ class Item extends Controller
         return response()->json($this->response, $this->responseCode);
     }
 
-    public function show(Request $request) {
+    public function show(Request $request)
+    {
         try {
             $itemId = $request->id;
 
@@ -178,9 +179,8 @@ class Item extends Controller
                     $this->response['data'] = $item;
 
                     foreach ($item as $items) {
-                        $items['picture'] = $base64Image ;
+                        $items['picture'] = $base64Image;
                     }
-                
                 } else {
                     $this->responseMessage = "Item Not Found";
                     $this->responseStatus = false;

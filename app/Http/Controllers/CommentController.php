@@ -16,12 +16,12 @@ class CommentController extends Controller
     public function store(Request $request)
     {
         try {
-            $validate = validator::make( $request->all(), [
+            $validate = validator::make($request->all(), [
                 'content' => 'required|string',
                 'item_id' => 'required',
                 'user_id' => 'required',
             ]);
-    
+
             if ($validate->fails()) {
                 $this->responseMessage = $validate->errors();
                 $this->responseStatus = false;
@@ -33,12 +33,12 @@ class CommentController extends Controller
                     'content' => $request->input('content'),
                 ]);
 
-                if($data){
+                if ($data) {
                     $this->responseMessage = "Success Input Comment";
                     $this->responseStatus = true;
                     $this->responseCode = 200;
                     $this->response['data'] = $data;
-                }else{
+                } else {
                     $this->responseMessage = "Failed Inputing Comment";
                     $this->responseStatus = false;
                     $this->responseCode = 400;
@@ -54,7 +54,8 @@ class CommentController extends Controller
         return response()->json($this->response, $this->responseCode);
     }
 
-    public function show(Request $request) {
+    public function show(Request $request)
+    {
         try {
             $itemId = $request->id;
 
@@ -70,7 +71,6 @@ class CommentController extends Controller
                     $this->responseStatus = true;
                     $this->responseCode = 200;
                     $this->response['data'] = $item;
-                
                 } else {
                     $this->responseMessage = "Item Not Found";
                     $this->responseStatus = false;
@@ -85,5 +85,5 @@ class CommentController extends Controller
         $this->response['success'] = $this->responseStatus;
         $this->response['message'] = $this->responseMessage;
         return response()->json($this->response, $this->responseCode);
-    }   
+    }
 }

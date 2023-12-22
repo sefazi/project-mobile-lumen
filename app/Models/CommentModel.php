@@ -11,5 +11,5 @@ class CommentModel extends Model
         'content',
         'item_id',
         'user_id'
-];
+    ];
 }

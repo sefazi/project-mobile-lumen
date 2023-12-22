@@ -37,7 +37,7 @@ $router->group(['prefix' => 'items'], function () use ($router) {
     // List all items
     $router->get('/', 'Item@index');
 });
- 
+
 // Data Users
 $router->group(['prefix' => 'users'], function () use ($router) {
     // List all users
@@ -56,12 +56,12 @@ $router->group(['prefix' => 'users'], function () use ($router) {
     $router->delete('{id}', 'UsersController@destroy');
 
     // Check Account
-    $router->post('check','UsersController@check');
+    $router->post('check', 'UsersController@check');
 });
 
 $router->group(['prefix' => 'rating'], function () use ($router) {
     // Get rating by id post
-    $router->get('{id}','RatingController@show');
+    $router->get('{id}', 'RatingController@show');
 
     // Insert Rating
     $router->post('/', 'RatingController@store');

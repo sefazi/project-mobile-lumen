@@ -11,5 +11,5 @@ class RatingModel extends Model
         'item_id',
         'user_id',
         'rating',
-];
+    ];
 }

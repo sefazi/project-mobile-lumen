@@ -14,36 +14,34 @@ class UsersController extends Controller
     private $responseCode;
     private $responseStatus;
     private $responseMessage;
-    
-    public function index() {
+
+    public function index()
+    {
         try {
             $data = User::all();
             $this->responseMessage = "Success Fetch All Data User";
             $this->responseStatus = true;
             $this->responseCode = 200;
             $this->response['data'] = $data;
-
         } catch (\Throwable $th) {
             $this->responseCode = 500;
             $this->responseStatus = false;
             $this->responseMessage = $th->getMessage();
-
         }
         $this->response['success'] = $this->responseStatus;
         $this->response['message'] = $this->responseMessage;
         return response()->json($this->response, $this->responseCode);
-
     }
 
     public function store(Request $request)
     {
         try {
-            $validate = validator::make( $request->all(), [
+            $validate = validator::make($request->all(), [
                 'username' => 'required|string|max:255',
                 'email' => 'required|email|unique:users,email',
                 'password' => 'required|string|min:6',
             ]);
-    
+
             if ($validate->fails()) {
                 $this->responseMessage = $validate->errors();
                 $this->responseStatus = false;
@@ -55,12 +53,12 @@ class UsersController extends Controller
                     'password' => Hash::make($request->input('password')),
                 ]);
 
-                if($data){
+                if ($data) {
                     $this->responseMessage = "Success Create User";
                     $this->responseStatus = true;
                     $this->responseCode = 200;
                     $this->response['data'] = $data;
-                }else{
+                } else {
                     $this->responseMessage = "Failed Create User";
                     $this->responseStatus = false;
                     $this->responseCode = 400;
@@ -76,7 +74,8 @@ class UsersController extends Controller
         return response()->json($this->response, $this->responseCode);
     }
 
-    public function show(Request $request) {
+    public function show(Request $request)
+    {
         try {
             $itemId = $request->id;
 
@@ -93,7 +92,7 @@ class UsersController extends Controller
                     $this->responseCode = 200;
                     $this->response['data'] = $item;
                     // $this->response['data']->bebek=Hash::check($this->response['data']->password,'');
-                
+
                 } else {
                     $this->responseMessage = "Item Not Found";
                     $this->responseStatus = false;
@@ -110,7 +109,8 @@ class UsersController extends Controller
         return response()->json($this->response, $this->responseCode);
     }
 
-    public function update(Request $request) {
+    public function update(Request $request)
+    {
         try {
             $itemId = $request->id;
 
@@ -127,7 +127,6 @@ class UsersController extends Controller
                 $this->responseStatus = true;
                 $this->responseCode = 200;
                 $this->response['data'] = $item;
-            
             } else {
                 $this->responseMessage = "Item Not Found";
                 $this->responseStatus = false;
@@ -143,7 +142,8 @@ class UsersController extends Controller
         return response()->json($this->response, $this->responseCode);
     }
 
-    public function destroy(Request $request) {
+    public function destroy(Request $request)
+    {
         try {
             $itemId = $request->id;
 
@@ -168,7 +168,6 @@ class UsersController extends Controller
                     $this->responseCode = 404;
                 }
             }
-
         } catch (\Throwable $th) {
             $this->responseCode = 500;
             $this->responseStatus = false;
@@ -179,7 +178,8 @@ class UsersController extends Controller
         return response()->json($this->response, $this->responseCode);
     }
 
-    public function check(Request $request) {
+    public function check(Request $request)
+    {
         try {
             $userEmail = $request->input('email');
             $userPassword = $request->input('password');
@@ -189,29 +189,26 @@ class UsersController extends Controller
                 $this->responseStatus = false;
                 $this->responseCode = 401;
             } else {
-                $item = User::where('email',$userEmail)->first();
+                $item = User::where('email', $userEmail)->first();
 
                 if ($item) {
 
-                    if (Hash::check($userPassword,$item->password)) {
+                    if (Hash::check($userPassword, $item->password)) {
                         $this->responseMessage = "Account Found";
                         $this->responseStatus = true;
                         $this->responseCode = 200;
                         $this->response['data'] = $item;
-                    }else {
+                    } else {
                         $this->responseMessage = "Password Not Match";
                         $this->responseStatus = false;
                         $this->responseCode = 401;
                     }
-
-                    
                 } else {
                     $this->responseMessage = "Item Not Found";
                     $this->responseStatus = false;
                     $this->responseCode = 404;
                 }
             }
-
         } catch (\Throwable $th) {
             $this->responseCode = 500;
             $this->responseStatus = false;
